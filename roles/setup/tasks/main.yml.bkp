@@ -1,0 +1,37 @@
+---
+  - name: "updating apt packages"
+    become: yes
+    apt:
+      update_cache: yes
+
+  - name: "upgrade packages"
+    become: yes
+    apt:
+      upgrade: yes
+
+  - name: "install dependencies, such as NodeJS and NPM"
+    shell: "wget https://nodejs.org/dist/latest/node-v19.6.0-linux-x64.tar.gz"
+  
+  - name: "unziping the package"
+    shell: "tar -xzf /tmp/node-v19.6.0-linux-x64.tar.gz"
+  - shell: "cd /tmp/node-v19.6.0-linux-x64"
+  - shell: "sh /tmp/configure.sh"
+  - shell: "sudo make install"
+
+  - name: "installing dependencies"
+    apt:
+      name: ["build-essential"]
+      state: latest
+
+  - name: "create web directory"
+    file:
+      path: "/tmp/web"
+      state: directory
+
+  - name: "copy index test" 
+    copy:
+      src: "index.js"
+      dest: "/tmp/web/index.js"
+
+  - name: "start web server"
+    shell: "pm2 start /tmp/web/index.js -f"

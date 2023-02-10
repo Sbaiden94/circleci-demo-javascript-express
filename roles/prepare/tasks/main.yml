@@ -1,0 +1,11 @@
+---
+  - name: "update apt packages"
+    become: true
+    become_method: sudo
+    yum:
+      update_cache: yes
+
+  - name: "remove dependencies that are no longer required"
+    become: true
+    yum:
+      autoremove: yes

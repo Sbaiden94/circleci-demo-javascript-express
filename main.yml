@@ -1,0 +1,7 @@
+---
+  - name: Exercise
+    hosts: genkeyservers
+      
+    roles:
+      - prepare
+      - apache

@@ -5,31 +5,37 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
- #myjob1:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+  configure_infrastructure:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprint: [d6:ba:b7:75:6f:56:5c:94:b2:bc:d6:e6:6c:18:c0:c8]
+      - run:
+          name: Install Ansible
+          command: |
+            #install Ansible
+            apk add --update ansible
+        
+      - run:
+          name: Run Playbook and Configure server
+          command: |
+            #Your command
+            ansible-playbook -i inventory main.yml    
+
+  #create_infrastructure:
     #docker:
-      #- image: 
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+      #- image: amazon/aws-cli
     #steps:
       #- checkout
       #- run:
-          #name: "hello world"
-          #command: "echo Hello, World!"
-
-  create_infrastructure:
-    docker:
-      - image: amazon/aws-cli
-    steps:
-      - checkout
-      - run:
-          name: Create Cloudformation Stack
-          command: |
-            aws cloudformation deploy \
-              --template-file template.yml \
-              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
-              --region us-east-1
+          #name: Create Cloudformation Stack
+          #command: |
+            #aws cloudformation deploy \
+              #--template-file template.yml \
+              #--stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+              #--region us-east-1
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   myWorkflow:
