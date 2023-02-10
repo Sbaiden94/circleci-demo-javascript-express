@@ -1,5 +1,5 @@
 ---
-  - name: Exercise for setting up a web server in an EC
+  - name: Exercisies for setting up a web server in an EC
     hosts: all
     user: ubuntu
     become: true
