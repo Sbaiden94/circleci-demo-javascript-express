@@ -5,5 +5,9 @@
     become: true
     become_method: sudo
     become_user: root
+
+    vars:
+      ansible_connection: ssh
+      ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
     roles:
       - setup
