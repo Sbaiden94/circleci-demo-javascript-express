@@ -1,6 +1,6 @@
 ---
   - name: Exercise
-    hosts: genkeyservers
+    hosts: all
       
     roles:
       - prepare
