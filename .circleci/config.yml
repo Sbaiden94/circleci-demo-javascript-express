@@ -21,7 +21,7 @@ jobs:
   create_infrastructure:
     docker:
       - image: amazon/aws-cli
-    step:
+    steps:
       - checkout
       - run:
           name: Create Cloudformation Stack
