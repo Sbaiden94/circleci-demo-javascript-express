@@ -25,7 +25,7 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file bucket.yml \
-              --stack-name stack-creat-bucket-${CIRCLE_WORKFLOW_ID:0:7} \
+              --stack-name stack-create-bucket-${CIRCLE_WORKFLOW_ID:0:7} \
               --parameter-overrides MyBucketName="mybucket-${CIRCLE_WORKFLOW_ID:0:7}" 
       - run: aws s3 sync . s3://mybucket-${CIRCLE_WORKFLOW_ID:0:7} --delete
   
@@ -55,9 +55,9 @@ jobs:
           name: Execute cloudfront.yml
           command: |
             aws cloudformation deploy \
-            --template-file cloudfront.yml \ 
-            --stack-name production-distro \
-            --parameter-overrides PipelineID="mybucket-${CIRCLE_WORKFLOW_ID:0:7}"
+              --template-file cloudfront.yml \ 
+              --stack-name production-distro \
+              --parameter-overrides PipelineID="mybucket-${CIRCLE_WORKFLOW_ID:0:7}"
   clean_up_old_front_end:
     docker:
       - image: amazon/aws-cli
